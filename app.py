@@ -1,4 +1,4 @@
-﻿import streamlit as st
+import streamlit as st
 import pandas as pd
 import numpy as np
 import datetime
@@ -553,7 +553,7 @@ with st.expander('How to use this app', expanded=True):
     5. **Set custom weights** for variables in the sidebar to create your own scenario.
     6. **Download** results and view descriptive charts for deeper insights.
     
-    > **Note:** For generating PDF reports with charts, it is recommended to have [Google Chrome](https://www.google.com/chrome/) installed on your system.
+    > **Note:** For generating PDF reports with charts, you must [download and run the app locally](https://www.dropbox.com/scl/fo/d1npg1g1gs8416vqqys22/AK7LMgDzIeTsshkcrTz9iYY?rlkey=nozu94wfmenl0p9kij0hm9x8i&st=b37syxar&dl=0). Google Chrome is required for PDF generation with charts.
     ''')
 
 # Sidebar controls
@@ -2671,3 +2671,4 @@ if generate_report:
         progress_bar.empty()
         status_text.empty()
         st.error(f"Failed to generate PDF report: {e}")
+
