@@ -656,20 +656,7 @@ with st.sidebar:
             manual_df = pd.DataFrame(st.session_state['manual_data'])
             st.dataframe(manual_df, use_container_width=True)
             use_manual = st.checkbox('Use manually entered data for analysis', key='use_manual_data')
-    # Donation section
-    st.markdown('---')
-    btc_address = 'bc1q9mqj6xm22g3g4lvxt97z909gjty223ltn7tl40'
-    btc_uri = f'bitcoin:{btc_address}'
-    qr = qrcode.make(btc_uri)
-    buf = BytesIO()
-    qr.save(buf)
-    st.image(buf.getvalue(), caption='Donation', width=100)
-    st.markdown(
-        'Developed by Aryan Zabihi • '
-        '[LinkedIn](https://www.linkedin.com/in/aryanzabihi/) | '
-        '[GitHub](https://github.com/Aryanzabihi)',
-        unsafe_allow_html=True
-    )
+
 
 # Initialize data and variables
 data = pd.DataFrame()
@@ -1431,7 +1418,7 @@ class PDFReport(FPDF):
         self.set_y(-15)
         self.set_font(self.font_body, 'I', 9)
         self.set_text_color(120, 120, 120)
-        self.cell(0, 8, f"Page {self.page_no()} | Developed by Aryan Zabihi", 0, 0, 'C')
+        self.cell(0, 8, f"Page {self.page_no()}", 0, 0, 'C')
         self.set_text_color(0, 0, 0)
     def set_section_title(self, title, level=1):
         self.section_title = title
@@ -1832,6 +1819,11 @@ report_options = {
 }
 
 generate_report = st.sidebar.button("Generate PDF Report")
+
+# Developer information (always visible)
+st.sidebar.markdown("---")
+st.sidebar.markdown("**Developed by Aryan Zabihi**")
+st.sidebar.markdown("[GitHub](https://github.com/Aryanzabihi) | [LinkedIn](https://www.linkedin.com/in/aryanzabihi/)")
 
 # Add progress bar under the button
 if generate_report:
@@ -2671,4 +2663,6 @@ if generate_report:
         progress_bar.empty()
         status_text.empty()
         st.error(f"Failed to generate PDF report: {e}")
+
+
 
