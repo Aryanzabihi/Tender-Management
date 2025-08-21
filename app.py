@@ -556,54 +556,88 @@ with st.expander('How to use this app', expanded=True):
     > **Note:** For generating PDF reports with charts, you must [download and run the app locally](https://www.dropbox.com/scl/fo/d1npg1g1gs8416vqqys22/AK7LMgDzIeTsshkcrTz9iYY?rlkey=nozu94wfmenl0p9kij0hm9x8i&st=b37syxar&dl=0). Google Chrome is required for PDF generation with charts.
     ''')
 
-# Sidebar controls
+# Sidebar controls - Organized in 3 sections
 with st.sidebar:
-    st.header('Tender Controls')
+    # ===== SECTION 1: DATA MANAGEMENT =====
+    st.header('📊 Data Management')
     
-    # Manual reset button
-    if st.button("🔄 Reset App Completely", key="manual_reset"):
-        st.session_state.clear()
+    # Template download button
+    st.markdown("**📋 Get Started with Template**")
+    template_df = pd.DataFrame({
+        'supplier': ['Supplier A', 'Supplier B', 'Supplier C'],
+        'price': [1000, 1175, 1080],
+        'currency': ['USD', 'EUR', 'USD'],
+        'discount': [50, 20, 35],
+        'payment_terms': ['Net 30', 'Net 60', 'Net 45'],
+        'quantity': [100, 180, 150],
+        'lead_time_days': [30, 42, 29],
+        'quality': [80, 86, 79],
+        'technical': [90, 87, 86],
+        'warranty_months': [24, 18, 20],
+        'certifications': ['ISO9001,CE', 'ISO14001', 'ISO9001'],
+        'delivery_time_days': [35, 48, 33],
+        'delivery_terms': ['FOB', 'CIF', 'FOB'],
+        'shipping_cost': [100, 145, 95],
+        'compliance': ['Yes', 'No', 'Yes'],
+        'compliance_notes': ['All docs provided', 'Missing certificate', 'All docs provided'],
+        'country': ['USA', 'Germany', 'USA'],
+        'supplier_type': ['Manufacturer', 'Distributor', 'Manufacturer'],
+        'experience_years': [10, 6, 8],
+        'score': [0.85, 0.79, 0.83],
+        'remarks': ['Preferred', '', 'Reliable']
+    })
+    template_csv = template_df.to_csv(index=False)
+    st.download_button(
+        label='📥 Download Template CSV',
+        data=template_csv,
+        file_name='tender_evaluation_template.csv',
+        mime='text/csv',
+        help='Download a clean template CSV file to get started with your tender evaluation.',
+        key='template_download'
+    )
+    
+    # Load Sample Data button
+    st.markdown("**🧪 Test App with Sample Data**")
+    if st.button('📊 Load Sample Dataset', key='load_sample_data', help='Click to load sample data and test the app functionality'):
+        st.session_state['sample_data_loaded'] = True
+        st.session_state['sample_data'] = pd.DataFrame({
+            'supplier': ['Supplier A', 'Supplier B', 'Supplier C', 'Supplier D', 'Supplier E', 'Supplier F', 'Supplier G'],
+            'price': [1000, 1175, 1080, 1120, 1055, 1205, 1095],
+            'currency': ['USD', 'EUR', 'USD', 'EUR', 'USD', 'EUR', 'USD'],
+            'discount': [50, 20, 35, 15, 25, 10, 30],
+            'payment_terms': ['Net 30', 'Net 60', 'Net 45', 'Net 30', 'Net 60', 'Net 45', 'Net 30'],
+            'quantity': [100, 180, 150, 170, 120, 160, 140],
+            'min_order_quantity': [50, 90, 70, 85, 60, 80, 65],
+            'lead_time_days': [30, 42, 29, 38, 33, 36, 40],
+            'quality': [80, 86, 79, 83, 81, 82, 85],
+            'technical': [90, 87, 86, 88, 85, 89, 91],
+            'warranty_months': [24, 18, 20, 22, 18, 16, 24],
+            'certifications': ['ISO9001,CE', 'ISO14001', 'ISO9001', 'CE', 'ISO9001,ISO14001', 'CE', 'ISO9001,CE'],
+            'delivery_time_days': [35, 48, 33, 44, 39, 37, 41],
+            'delivery_terms': ['FOB', 'CIF', 'FOB', 'CIF', 'FOB', 'CIF', 'FOB'],
+            'shipping_cost': [100, 145, 95, 125, 110, 120, 115],
+            'compliance': ['Yes', 'No', 'Yes', 'Yes', 'Yes', 'No', 'Yes'],
+            'compliance_notes': ['All docs provided', 'Missing certificate', 'All docs provided', 'All docs provided', 'All docs provided', 'Missing docs', 'All docs provided'],
+            'country': ['USA', 'Germany', 'USA', 'France', 'USA', 'Italy', 'Spain'],
+            'supplier_type': ['Manufacturer', 'Distributor', 'Manufacturer', 'Distributor', 'Manufacturer', 'Distributor', 'Manufacturer'],
+            'experience_years': [10, 6, 8, 7, 9, 5, 11],
+            'score': [0.85, 0.79, 0.83, 0.81, 0.82, 0.77, 0.86],
+            'remarks': ['Preferred', '', 'Reliable', '', 'Preferred', '', 'Top rated']
+        })
+        st.success('✅ Sample data loaded successfully! You can now explore all app features.')
         st.rerun()
     
-    st.markdown("---")
-    # Comprehensive Sample CSV schema for user guidance
-    sample_df = pd.DataFrame({
-        'supplier': ['Supplier A', 'Supplier B', 'Supplier C', 'Supplier D', 'Supplier E', 'Supplier F', 'Supplier G'],
-        'price': [1000, 1175, 1080, 1120, 1055, 1205, 1095],
-        'currency': ['USD', 'EUR', 'USD', 'EUR', 'USD', 'EUR', 'USD'],
-        'discount': [50, 20, 35, 15, 25, 10, 30],
-        'payment_terms': ['Net 30', 'Net 60', 'Net 45', 'Net 30', 'Net 60', 'Net 45', 'Net 30'],
-        'quantity': [100, 180, 150, 170, 120, 160, 140],
-        'min_order_quantity': [50, 90, 70, 85, 60, 80, 65],
-        'lead_time_days': [30, 42, 29, 38, 33, 36, 40],
-        'quality': [80, 86, 79, 83, 81, 82, 85],
-        'technical': [90, 87, 86, 88, 85, 89, 91],
-        'warranty_months': [24, 18, 20, 22, 18, 16, 24],
-        'certifications': ['ISO9001,CE', 'ISO14001', 'ISO9001', 'CE', 'ISO9001,ISO14001', 'CE', 'ISO9001,CE'],
-        'delivery_time_days': [35, 48, 33, 44, 39, 37, 41],
-        'delivery_terms': ['FOB', 'CIF', 'FOB', 'CIF', 'FOB', 'CIF', 'FOB'],
-        'shipping_cost': [100, 145, 95, 125, 110, 120, 115],
-        'compliance': ['Yes', 'No', 'Yes', 'Yes', 'Yes', 'No', 'Yes'],
-        'compliance_notes': ['All docs provided', 'Missing certificate', 'All docs provided', 'All docs provided', 'All docs provided', 'Missing docs', 'All docs provided'],
-        'country': ['USA', 'Germany', 'USA', 'France', 'USA', 'Italy', 'Spain'],
-        'supplier_type': ['Manufacturer', 'Distributor', 'Manufacturer', 'Distributor', 'Manufacturer', 'Distributor', 'Manufacturer'],
-        'experience_years': [10, 6, 8, 7, 9, 5, 11],
-        'score': [0.85, 0.79, 0.83, 0.81, 0.82, 0.77, 0.86],
-        'remarks': ['Preferred', '', 'Reliable', '', 'Preferred', '', 'Top rated']
-    })
-    sample_csv = sample_df.to_csv(index=False)
-    st.download_button(
-        label='Download Sample CSV Schema',
-        data=sample_csv,
-        file_name='sample_tender_schema.csv',
-        mime='text/csv',
-        help='Download a sample CSV showing a comprehensive data schema and variables.'
-    )
-    uploaded_file = st.file_uploader('Upload Tender Offers CSV', type=['csv'], help='Upload a CSV file with supplier offers and variables.')
-    # Move manual data entry button and logic directly below file uploader
+    # Show status if sample data is loaded
+    if st.session_state.get('sample_data_loaded', False):
+        st.info('📊 Sample data is currently loaded. Use the tabs above to explore the app features.')
+    
+    # File uploader
+    uploaded_file = st.file_uploader('📁 Upload Tender Offers CSV', type=['csv'], help='Upload a CSV file with supplier offers and variables.')
+    
+    # Manual data entry
     if 'show_manual_entry' not in st.session_state:
         st.session_state['show_manual_entry'] = False
-    if st.button('Manual Data Entry', key='show_manual_entry_btn'):
+    if st.button('✏️ Manual Data Entry', key='show_manual_entry_btn'):
         st.session_state['show_manual_entry'] = not st.session_state['show_manual_entry']
     if st.session_state['show_manual_entry']:
         st.subheader('Manual Data Entry')
@@ -656,6 +690,53 @@ with st.sidebar:
             manual_df = pd.DataFrame(st.session_state['manual_data'])
             st.dataframe(manual_df, use_container_width=True)
             use_manual = st.checkbox('Use manually entered data for analysis', key='use_manual_data')
+    
+    # Reset button
+    if st.button("🔄 Reset App Completely", key="manual_reset"):
+        st.session_state.clear()
+        st.rerun()
+    
+    st.markdown("---")
+    
+    # ===== SECTION 2: REPORTS & EXPORTS =====
+    st.header('📋 Reports & Exports')
+    
+    # Include Dashboard, Scoring Model, SSBI, Advanced Analytics, Negotiation Strategy, and What-If Analysis in the sidebar options for report generation
+    report_options = {
+        "Dashboard": st.checkbox("Dashboard", value=True),
+        "Scoring Model": st.checkbox("Scoring Model", value=False),
+        "SSBI": st.checkbox("SSBI", value=False),
+        "Advanced Analytics": st.checkbox("Advanced Analytics", value=False),
+        "Negotiation Strategy": st.checkbox("Negotiation Strategy", value=False),
+        "What-If Analysis": st.checkbox("What-If Analysis", value=False),
+    }
+
+    generate_report = st.button("📄 Generate PDF Report")
+    
+    # Add progress bar under the button
+    if generate_report:
+        progress_bar = st.progress(0)
+        status_text = st.empty()
+    
+    st.markdown("---")
+    
+    # ===== SECTION 3: DEVELOPER INFO & SUPPORT =====
+    st.header('👨‍💻 Developer & Support')
+    st.markdown("**Developed by Aryan Zabihi**")
+    
+    # All links in one unified section
+    st.markdown("[🔗 GitHub](https://github.com/Aryanzabihi)")
+    st.markdown("[💼 LinkedIn](https://www.linkedin.com/in/aryanzabihi/)")
+    st.markdown("💝 [Donate via PayPal](https://www.paypal.com/donate/?hosted_button_id=C9W46U77KNU9S)")
+    
+    # Custom CSS to remove underlines from hyperlinks
+    st.markdown("""
+        <style>
+        .stMarkdown a {
+            text-decoration: none !important;
+        }
+        </style>
+        """, unsafe_allow_html=True)
 
 
 # Initialize data and variables
@@ -667,6 +748,25 @@ if st.session_state.get('use_manual_data', False) and st.session_state.get('manu
     data = pd.DataFrame(st.session_state['manual_data'])
     st.header('Manual Data')
     st.dataframe(data, use_container_width=True)
+    variables = get_variable_list(data)
+elif st.session_state.get('sample_data_loaded', False) and st.session_state.get('sample_data') is not None:
+    # Load sample data for testing
+    original_data = st.session_state['sample_data'].copy()
+    data = original_data.copy()
+    st.header('📊 Sample Data (Testing Mode)')
+    st.info('This is sample data loaded for testing the app. You can explore all features with this data.')
+    st.dataframe(data, use_container_width=True)
+    
+    # Apply compliance filtering if column exists
+    if 'compliance' in data.columns:
+        data = data[data['compliance'].str.lower() == 'yes']
+
+    # Force numeric conversion for all relevant columns
+    exclude_cols = ['supplier', 'name', 'id', 'compliance', 'certifications', 'compliance_notes', 'payment_terms', 'supplier_type']
+    for col in data.columns:
+        if col.lower() not in exclude_cols:
+            data[col] = pd.to_numeric(data[col], errors='coerce')
+
     variables = get_variable_list(data)
 elif uploaded_file is not None:
     original_data = pd.read_csv(uploaded_file)
@@ -1804,32 +1904,7 @@ def generate_professional_pdf_report(sections, developer_name="Aryan Zabihi", ex
     
     return bytes(pdf.output(dest='S'))
 
-# --- Sidebar PDF Report Controls ---
-st.sidebar.markdown("---")
-st.sidebar.header("PDF Report Generator")
-
-# Include Dashboard, Scoring Model, SSBI, Advanced Analytics, Negotiation Strategy, and What-If Analysis in the sidebar options for report generation
-report_options = {
-    "Dashboard": st.sidebar.checkbox("Dashboard", value=True),
-    "Scoring Model": st.sidebar.checkbox("Scoring Model", value=False),
-    "SSBI": st.sidebar.checkbox("SSBI", value=False),
-    "Advanced Analytics": st.sidebar.checkbox("Advanced Analytics", value=False),
-    "Negotiation Strategy": st.sidebar.checkbox("Negotiation Strategy", value=False),
-    "What-If Analysis": st.sidebar.checkbox("What-If Analysis", value=False),
-}
-
-generate_report = st.sidebar.button("Generate PDF Report")
-
-# Developer information (always visible)
-st.sidebar.markdown("---")
-st.sidebar.markdown("**Developed by Aryan Zabihi**")
-st.sidebar.markdown("[GitHub](https://github.com/Aryanzabihi) | [LinkedIn](https://www.linkedin.com/in/aryanzabihi/)")
-
-# Add progress bar under the button
-if generate_report:
-    st.sidebar.markdown("---")
-    progress_bar = st.sidebar.progress(0)
-    status_text = st.sidebar.empty()
+# --- PDF Report Generation Logic ---
 
 # --- Improved PDF Report Generation Logic ---
 if generate_report:
