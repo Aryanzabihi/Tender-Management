@@ -1,5 +1,7 @@
 # Smart Tender Evaluation System
 
+https://tender-management.streamlit.app/
+
 ## 📊 Overview
 
 The **Smart Tender Evaluation System** is a comprehensive, AI-powered web application designed for procurement professionals to analyze, score, and evaluate supplier offers in tender processes. Built with Streamlit, it provides advanced analytics, machine learning insights, and professional reporting capabilities.
@@ -434,5 +436,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 5. **Generate reports**: Use the PDF report feature for stakeholders
 
 ---
+
 
 *This documentation is maintained by Aryan Zabihi. For the latest updates, please check the GitHub repository.* 
